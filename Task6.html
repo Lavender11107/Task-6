@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            max-width: 500px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .error {
+            color: red;
+            font-size: 0.9em;
+            margin-top: -10px;
+            margin-bottom: 10px;
+        }
+
+        .success {
+            color: green;
+            font-size: 1em;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Contact Us</h2>
+
+    <form id="contactForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" placeholder="Your Name">
+        <div id="nameError" class="error"></div>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="Your Email">
+        <div id="emailError" class="error"></div>
+
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" placeholder="Your Message" rows="5"></textarea>
+        <div id="messageError" class="error"></div>
+
+        <button type="submit">Submit</button>
+        <div id="formSuccess" class="success"></div>
+    </form>
+
+    <!-- JavaScript for validation -->
+    <script>
+        // Select the form and input fields
+        const form = document.getElementById('contactForm');
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const messageInput = document.getElementById('message');
+
+        const nameError = document.getElementById('nameError');
+        const emailError = document.getElementById('emailError');
+        const messageError = document.getElementById('messageError');
+        const formSuccess = document.getElementById('formSuccess');
+
+        // Function to validate email format
+        function isValidEmail(email) {
+            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return regex.test(email);
+        }
+
+        // Form submit event
+        form.addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent form from submitting automatically
+
+            // Clear previous messages
+            nameError.textContent = '';
+            emailError.textContent = '';
+            messageError.textContent = '';
+            formSuccess.textContent = '';
+
+            let valid = true;
+
+            // Validate Name
+            if (nameInput.value.trim() === '') {
+                nameError.textContent = 'Name is required.';
+                valid = false;
+            }
+
+            // Validate Email
+            if (emailInput.value.trim() === '') {
+                emailError.textContent = 'Email is required.';
+                valid = false;
+            } else if (!isValidEmail(emailInput.value.trim())) {
+                emailError.textContent = 'Please enter a valid email.';
+                valid = false;
+            }
+
+            // Validate Message
+            if (messageInput.value.trim() === '') {
+                messageError.textContent = 'Message cannot be empty.';
+                valid = false;
+            }
+
+            // If all validations pass
+            if (valid) {
+                formSuccess.textContent = 'Thank you! Your message has been sent.';
+                form.reset(); // Clear the form fields
+            }
+        });
+    </script>
+
+</body>
+
+</html>
